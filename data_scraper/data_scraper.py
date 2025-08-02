@@ -55,7 +55,7 @@ def scrape_data(isin):
         print(f"Error fetching data for {isin}: {e}")
         return None
 
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(response.content, "lxml")
 
     tables_to_find = {
         "data_table": "table.etf-data-table",
@@ -83,8 +83,22 @@ def scrape_data(isin):
                 if table_data:
                     df_table = pd.read_html(str(table_data))[0]
                     save_to_csv(df_table, isin, key)
-                    break  # Only process the first matching table
             else:
                 print(f"No {tables_to_find[key]['header']} table found for {isin}")
         except Exception as e:
             print(f"Error processing {key} for {isin}: {e}")
+
+    time.sleep(1)  # Sleep to avoid overwhelming the server
+
+
+# main function to iterate over ISIN codes
+def main():
+    for isin in isin_codes:
+        print(f"Scraping data for ISIN: {isin}")
+        scrape_data(isin)
+        time.sleep(2)  # Sleep between requests to avoid rate limiting
+
+
+if __name__ == "__main__":
+    main()
+# This script will scrape data for each ISIN code in the list and save the results to CSV files.
