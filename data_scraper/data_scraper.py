@@ -79,6 +79,11 @@ def scrape_data(isin):
 
     soup = BeautifulSoup(response.content, "lxml")
 
+    # print(f"--- h3 headers for {isin} ---")
+    # for h3 in soup.find_all("h3"):
+    #    print(h3.get_text(strip=True))
+    # print("----------------------------")
+
     tables_to_find = {
         "data_table": "table.etf-data-table",
         "top_holdings": {"class": "table mb-0", "header": "Top 10 Holdings"},
@@ -100,20 +105,24 @@ def scrape_data(isin):
     # rest of tables are identified by class and header
     for key in ["top_holdings", "countries", "sectors"]:
         try:
-            table = soup.find("h3", string=tables_to_find[key]["header"])
-            if table:
-                table_data = table.find_next(
-                    "table", class_=tables_to_find[key]["class"]
-                )
-                if table_data:
-                    df_table = pd.read_html(str(table_data))[0]
-                    df_table.insert(0, "ISIN", isin)  # Add ISIN as the first column
-                    merged_data[key].append(df_table)
-                    print(
-                        f"{tables_to_find[key]['header']} for {isin} scraped successfully."
-                    )
-            else:
-                print(f"No {tables_to_find[key]['header']} table found for {isin}")
+            expected_header = tables_to_find[key]["header"].strip().lower()
+            table_class = tables_to_find[key]["class"]
+
+            # Find the <h3> tag with the expected header
+            h3_tags = soup.find_all("h3")
+            for h3 in h3_tags:
+                if expected_header.lower() in h3.get_text(strip=True).strip().lower():
+                    table_data = h3.find_next("table", class_=table_class)
+                    if table_data:
+                        df_table = pd.read_html(str(table_data))[0]
+                        df_table.insert(0, "ISIN", isin)  # Add ISIN as the first column
+                        merged_data[key].append(df_table)
+                        print(
+                            f"{tables_to_find[key]['header']} for {isin} scraped successfully."
+                        )
+                    break
+                else:
+                    print(f"No {tables_to_find[key]['header']} table found for {isin}")
         except Exception as e:
             print(f"Error processing {key} for {isin}: {e}")
 
