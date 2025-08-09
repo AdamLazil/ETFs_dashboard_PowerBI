@@ -6,15 +6,15 @@ This Python script scrapes ETF profile data from JustETF.com for a given list of
 
 It extracts four types of data for each ETF:
 
-General ETF data table (fund details, key metrics)
+- _General ETF data table (fund details, key metrics)_
 
-Top 10 holdings
+- _Top 10 holdings_
 
-Countries allocation
+- _Countries allocation_
 
-Sectors allocation
+- _Sectors allocation_
 
-The script then:
+**The script then:**
 
 Merges the results of each category across all ISINs into a single CSV file.
 
