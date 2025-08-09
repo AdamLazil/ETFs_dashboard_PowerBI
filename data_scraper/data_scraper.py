@@ -146,6 +146,20 @@ def main():
         print(f"No data to save for {key}")
 
 
+def transform_csv(table_name):
+    """Transform the CSV file data_table from rows to collumn."""
+    df = pd.read_csv(table_name)
+    df.columns = ["ISIN", "Key", "Values"]
+    pivot_df = df.pivot(index="ISIN", columns="Key", values="Values").reset_index()
+    # save the file back to the same path with another name
+    output_file = os.path.join(
+        output_dir, f"transformed_{os.path.basename(table_name)}"
+    )
+    pivot_df.to_csv(output_file, index=False)
+    print(f"Transformed {output_file} and saved to the new file.")
+
+
 if __name__ == "__main__":
     main()
+    transform_csv(os.path.join(output_dir, "data_table.csv"))
 # This script will scrape data for each ISIN code in the list and save the results to CSV files.
