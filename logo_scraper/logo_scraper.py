@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 from tqdm import tqdm
+import re
 
 file_path = "E:/UCENI/Engeto/datovaAkademie/ETFs_dashboard/ETFs_dashboard_PowerBI/data_files/csv_files/top_holdings.csv"
 
@@ -17,7 +18,9 @@ def get_logo_url(company_name):
         response = requests.get(search_url, timeout=10)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        img_tag = soup.find("img", class_="mw-file-description")
+        img_tag = soup.find(
+            "img", alt=re.compile("Thumbnail for file", re.I)
+        )  # class_"ssearchResultImage-thumbnail
         if img_tag and "src" in img_tag.attrs:
             img_url = img_tag["src"]
             return img_url
