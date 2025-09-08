@@ -4,7 +4,7 @@ This project is an interactive **Power BI dashboard** focused on analyzing Europ
 The dashboard allows users to track performance, risk, and key characteristics of ETFs,
 and compare them both individually and across sectors.
 
-📊 ## Dashboard Content
+## 📊 Dashboard Content
 
 This project consists of **10 pages**:
 
@@ -17,11 +17,8 @@ Introduction to ETFs, navigation menu, and links to all sections.
 Dedicated pages for each ETF with:
 
 - two charts (price evolution, performance, candelstick chart, etc.),
-
 - key performance indicators (performance, volatility, max drawdown),
-
 - top holdings and share of participated countries
-
 - reset button and navigation menu.
 
 - **Candelstick Analyzer**
@@ -36,6 +33,7 @@ scatter plot visualization, and KPI indicators.
 🛠️ **Key Features**
 
 - Gethering, sorting and cleanig data
+- **Python scripts**: for scraping data and some jpg. files
 - **Data modeling**: multiple tables (price history, ETF metadata, date table, etc.).
 - **DAX measures**: performance, CAGR, volatility, max drawdown, EMA, streak counter, performance for various periods (YTD, 3y, 5y, max).
 - **Interactive navigation**: bookmarks, reset buttons, slicers for ISIN, year, month, and custom time periods.
