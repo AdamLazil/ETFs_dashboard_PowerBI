@@ -46,3 +46,8 @@ scatter plot visualization, and KPI indicators.
 - **Max Drawdown**
 - **Drop Streak (longest consecutive days of decline)**
 - **Top 3 and Bottom 3 ETFs**
+
+📷 **Visual**
+
+![ETF Dashboard - Home page](Screenshots/home_page.png)
+![ETF Dashboard - Home page](Screenshots/one_page.png)
